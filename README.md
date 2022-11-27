@@ -9,7 +9,7 @@ It relies on running a local DNS server which is able to direct the addresses:
 
 to an address on the LAN which is running this server.
 
-It has been tested with a Delta Mini that has been previosuly connected to the Internet. It has not been testing with a device which has never been conected to the ecoflow servers.
+It has been tested with a Delta Mini that has been previously connected to the Internet. It has not been testing with a device which has never been conected to the Ecoflow servers.
 
 All the server does is allow the power station to connect, send data and requests a PD packet every 10 seconds - which is enough to convince the power station it is online and to enable it's local API.
 
