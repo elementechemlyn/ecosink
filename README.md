@@ -1,6 +1,6 @@
 # "Fake" Server for EcoFlow Portable Power Stations
 
-This provides a server for Ecoflow power stations to communicate with instead of the Ecoflow Internet servers. This allows use of the local API without sending data to the Internet.
+A server for Ecoflow power stations to communicate with instead of the Ecoflow Internet servers. This allows use of the local API without sending data to the Internet.
 
 It relies on running a local DNS server which is able to direct the addresses:
 
