@@ -4,6 +4,10 @@ import ecoflow_server
 import time
 
 async def main():
+
+    ecoflow_server.ecoflow_queue_tx = asyncio.Queue()
+    ecoflow_server.ecoflow_queue_rx = asyncio.Queue()
+
     server = await asyncio.start_server(
         ecoflow_server.handle_ecoflow, '0.0.0.0', 6500)
 
