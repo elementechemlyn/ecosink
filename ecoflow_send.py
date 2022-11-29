@@ -1,4 +1,4 @@
-import ecoflow 
+import ecoflow_recieve 
 from typing import Optional
 
 def _btoi(b: Optional[bool]):
@@ -9,10 +9,10 @@ def _btoi(b: Optional[bool]):
 def build2(dst: int, cmd_set: int, cmd_id: int, data: bytes = b''):
     b = bytes([170, 2])
     b += len(data).to_bytes(2, "little")
-    b += ecoflow.calcCrc8(b)
+    b += ecoflow_recieve.calcCrc8(b)
     b += bytes([13, 0, 0, 0, 0, 0, 0, 32, dst, cmd_set, cmd_id])
     b += data
-    b += ecoflow.calcCrc16(b)
+    b += ecoflow_recieve.calcCrc16(b)
     return b
 
 def reset():
@@ -43,14 +43,14 @@ def get_inverter():
     return build2(4, 32, 2)
 
 def get_dc_in_type(product: int):
-    if ecoflow.is_delta(product):
+    if ecoflow_recieve.is_delta(product):
         cmd = (5, 32, 82)
     else:
         cmd = (4, 32, 68)
     return build2(*cmd, bytes([0]))
 
 def get_dc_in_current(product: int):
-    dst = 5 if ecoflow.is_delta(product) else 4
+    dst = 5 if ecoflow_recieve.is_delta(product) else 4
     return build2(dst, 32, 72)
 
 def get_fan_auto():
@@ -80,7 +80,7 @@ def set_light(product: int, value: int):
     return build2(2, 32, 35, bytes([value]))
 
 def set_dc_out(product: int, enable: bool):
-    if ecoflow.is_delta(product):
+    if ecoflow_recieve.is_delta(product):
         cmd = (5, 32, 81)
     elif product == 20:
         cmd = (8, 8, 3)
@@ -95,7 +95,7 @@ def set_beep(enable: bool):
 
 def set_lcd(product: int, time: int = 0xFFFF, light: int = 255):
     arg = time.to_bytes(2, "little")
-    if ecoflow.is_delta(product) or ecoflow.is_river_mini(product):
+    if ecoflow_recieve.is_delta(product) or ecoflow_recieve.is_river_mini(product):
         arg += bytes([light])
     return build2(2, 32, 39, arg)
 
@@ -126,7 +126,7 @@ def set_ac_out(product: int, enable: bool = None, xboost: bool = None, freq: int
 
 
 def set_dc_in_type(product: int, value: int):
-    if ecoflow.is_delta(product):
+    if ecoflow_recieve.is_delta(product):
         cmd = (5, 32, 82)
     else:
         cmd = (4, 32, 67)
@@ -140,7 +140,7 @@ def set_ac_in_limit(watts: int = 0xFFFF, pause: bool = None):
 
 
 def set_dc_in_current(product: int, value: int):
-    dst = 5 if ecoflow.is_delta(product) else 4
+    dst = 5 if ecoflow_recieve.is_delta(product) else 4
     return build2(dst, 32, 71, value.to_bytes(4, "little"))
 
 def set_fan_auto(product: int, value: bool):
